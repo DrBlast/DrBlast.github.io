@@ -1,26 +1,36 @@
-<div class="address-review">
-    <div class="header">
+<div class="review-popup">
+    <div class="popup-header">
         <span class="baloon-header">
-            <i class="fa fa-map-marker"></i>
+            <i class="fa fa-map-marker-alt popup-geo-point"></i>
             This is address
         </span>
         <button type="button" class="btn-close">
-            <i class="fa fa-times"></i>
+            <i class="fa fa-times" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="review-list">
-        <div class="review-list-wrapper">
+    <div class="reviews">
+        <div class="review-list">
             no review
         </div>
-        <form class="add-review">
-            <h2 class="add-review-header">
-                Ваш отзыв
-            </h2>
-            <input name="author" placeholder="Ваше имя">
-            <input name="place" placeholder="Укажите место">
-            <textarea name="text" id="review-textarea" rows="5"
-                      placeholder="Поделитесь впечатлениями"></textarea>
-            <button class="add-review-btn">Добавить</button>
-        </form>
+        <div class="add-review-form">
+            <form class="add-review">
+                <div class="add-review-header">
+                    Ваш отзыв
+                </div>
+                <div class="row">
+                    <input name="author" placeholder="Ваше имя">
+                </div>
+                <div class="row">
+                    <input name="place" placeholder="Укажите место">
+                </div>
+                <div class="row">
+                <textarea name="text" id="review-textarea" rows="5"
+                          placeholder="Поделитесь впечатлениями"></textarea>
+                </div>
+                <div class="row">
+                    <button class="add-review-btn">Добавить</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
