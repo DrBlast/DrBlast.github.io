@@ -1,8 +1,8 @@
 <div class="review-popup">
     <div class="popup-header">
-        <span class="baloon-header">
+        <span class="balloon-header">
             <i class="fa fa-map-marker-alt popup-geo-point"></i>
-            This is address
+            {{address}}
         </span>
         <button type="button" class="btn-close">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -10,27 +10,25 @@
     </div>
     <div class="reviews">
         <div class="review-list">
-            no review
+            Отзывов пока нет
         </div>
-        <div class="add-review-form">
-            <form class="add-review">
-                <div class="add-review-header">
-                    Ваш отзыв
-                </div>
-                <div class="row">
-                    <input name="author" placeholder="Ваше имя">
-                </div>
-                <div class="row">
-                    <input name="place" placeholder="Укажите место">
-                </div>
-                <div class="row">
-                <textarea name="text" id="review-textarea" rows="5"
-                          placeholder="Поделитесь впечатлениями"></textarea>
-                </div>
-                <div class="row">
-                    <button class="add-review-btn">Добавить</button>
-                </div>
-            </form>
-        </div>
+    </div>
+    <!--    <hr class="delimiter"/>-->
+    <div class="add-review-form">
+        <form class="add-review">
+            <div class="add-review-header">
+                Ваш отзыв
+            </div>
+            <input name="author" placeholder="Ваше имя" autocomplete="off">
+
+            <input name="place" placeholder="Укажите место" autocomplete="off">
+
+            <textarea name="text" id="review-textarea" rows="5"
+                      placeholder="Поделитесь впечатлениями"></textarea>
+            <div>
+                <button class="add-review-btn float-right">Добавить</button>
+            </div>
+
+        </form>
     </div>
 </div>

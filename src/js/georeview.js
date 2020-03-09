@@ -1,76 +1,108 @@
-const balloonTpl = require('../templates/b.hbs');
+const balloonTpl = require('../templates/balloon.hbs');
 
 const init = () => {
-    //
-    // const balloonLayout = ymaps.templateLayoutFactory.createClass(balloonTpl(), {
-    //     build: function () {
-    //         balloonLayout.superclass.build.call(this);
-    //         const closeButton = document.querySelector('.btn-close');
-    //
-    //         closeButton.addEventListener('click', () => {
-    //             this.closeBalloon();
-    //         })
-    //     },
-    //     clear: function () {
-    //         balloonLayout.superclass.clear.call(this);
-    //     },
-    //     closeBalloon: function () {
-    //         this.events.fire('userclose');
-    //     }
-    // });
+        const balloonLayout = (qwe) => {
+            console.log("my param is");
+            console.log(qwe);
+            let b =  balloonTpl(qwe);
+           // console.log(b);
+            return ymaps.templateLayoutFactory.createClass(
+               b, {
+                    build: function () {
+                        this.superclass.build.call(this);
+                        const closeButton = document.querySelector('.btn-close');
 
-    const iconLayout = ymaps.templateLayoutFactory.createClass(
-        '<i class="fa fa-map-marker-alt map-balloon"></i>',
-        {
-            build: function () {
-                // необходим вызов родительского метода, чтобы добавить содержимое макета в DOM
-                this.constructor.superclass.build.call(this);
-                const myIcon = document.querySelector(".map-balloon");
-
-                myIcon.addEventListener('mouseover', (e) => {
-                    //e.target.style.cursor = "pointer";
-                    e.target.style.color = "#ff8663";
-
+                        closeButton.addEventListener('click', () => {
+                            this.closeBalloon();
+                        })
+                    },
+                    clear: function () {
+                        this.superclass.clear.call(this);
+                    },
+                    closeBalloon: function () {
+                        this.events.fire('userclose');
+                    },
+                    getShape: function () {
+                        let el = this.getElement(),
+                            result = null;
+                        if (el) {
+                            let firstChild = el.firstChild;
+                            result = new ymaps.shape.Rectangle(
+                                new ymaps.geometry.pixel.Rectangle([
+                                    [0, 0],
+                                    [firstChild.offsetWidth, firstChild.offsetHeight]
+                                ])
+                            );
+                        }
+                        return result;
+                    }
                 });
-            },
+        };
 
-            clear: function () {
-                const myIcon = document.querySelector(".map-balloon");
+//getAddress
+        const reverseGeoCode = (coords) => {
+            // Определяем адрес по координатам (обратное геокодирование).
+            return ymaps.geocode(coords).then(res => {
+                let firstGeoObject = res.geoObjects.get(0);
+                return firstGeoObject.getAddressLine();
+            });
+        };
 
-                // myBalloon.removeEventListener('mouseover', this.onNameHover);
-            },
 
-        }
-    );
+        // const bcl = () => {
+        //     return ymaps.templateLayoutFactory.createClass(balloonTpl);
+        // }
 
 
-    let map = new ymaps.Map('map', {
+        let map = new ymaps.Map('map', {
             center: [55.650625, 37.62708],
             zoom: 10,
             controlls: ['zoomControl']
 
-        }),
+        }, {balloonLayout});
 
-        MyBalloonContentLayout = ymaps.templateLayoutFactory.createClass(balloonTpl),
+        map.events.add('click', e => {
+            const pointCoords = e.get('coords');
+            const pointAddress = reverseGeoCode(pointCoords);
 
-        // Создание метки с пользовательским макетом балуна.
-        myPlacemark = window.myPlacemark = new ymaps.Placemark(map.getCenter(), {
-            balloonHeader: 'Заголовок балуна',
-            hintContent: 'Контент балуна'
-        }, {
-
-            balloonShadow: false,
-            // balloonLayout: balloonLayout,
-            // balloonContentLayout: MyBalloonContentLayout,
-           // balloonPanelMaxMapArea: 0,
-            iconLayout: iconLayout
-            // Не скрываем иконку при открытом балуне.
-            // hideIconOnBalloonOpen: false,
-            // И дополнительно смещаем балун, для открытия над иконкой.
-            // balloonOffset: [3, -40]
+            // console.log(pointAddress);
+            // console.log(pointCoords);
+            //   pointAddress.then(address => {
+            map.balloon.open(pointCoords, {
+                properties: {
+                    coords: pointCoords,
+                    address: pointAddress
+                },
+                layout: balloonLayout("xxx"),
+                //contentLayout: bcl(pointAddress),
+                closeButton: false
+            });
         });
-
-    map.geoObjects.add(myPlacemark);
-};
+        //    });
+// MyBalloonContentLayout = ymaps.templateLayoutFactory.createClass(balloonTpl),
+//
+//     // Создание метки с пользовательским макетом балуна.
+// let myPlacemark = window.myPlacemark = new ymaps.Placemark(map.getCenter(), {
+//     balloonHeader: 'Заголовок балуна',
+//     hintContent: 'Контент балуна'
+// }, {
+//
+//     balloonShadow: false,
+//     balloonLayout: balloonLayout,
+//     balloonContentLayout: balloonContentLayout,
+//     // balloonPanelMaxMapArea: 0,
+//     iconLayout: 'default#image',
+//     iconImageHref: './img/balloon.svg',
+//     iconImageSize: [20, 30],
+//
+//     // Не скрываем иконку при открытом балуне.
+//     // hideIconOnBalloonOpen: false,
+//     // И дополнительно смещаем балун, для открытия над иконкой.
+//     // balloonOffset: [3, -40]
+// });
+//
+// map.geoObjects.add(myPlacemark);
+    }
+;
 
 export default init;
