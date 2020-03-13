@@ -1,38 +1,43 @@
 const balloonTpl = require('../templates/balloon.hbs');
 
 const init = () => {
-        const balloonLayout = ymaps.templateLayoutFactory.createClass(
-            balloonTpl(), {
-                build: function () {
-                    this.superclass.build.call(this);
-                    const closeButton = document.querySelector('.btn-close');
+        const balloonLayout = (addr) => {
+            console.log("my param is");
+            console.log(addr);
+            let b = balloonTpl(addr);
+            console.log(b);
+            return ymaps.templateLayoutFactory.createClass(
+                balloonTpl(addr), {
+                    build: function () {
+                        this.superclass.build.call(this);
+                        const closeButton = document.querySelector('.btn-close');
 
-                    closeButton.addEventListener('click', () => {
-                        this.closeBalloon();
-                    })
-                },
-                clear: function () {
-                    this.superclass.clear.call(this);
-                },
-                closeBalloon: function () {
-                    this.events.fire('userclose');
-                },
-                getShape: function () {
-                    let el = this.getElement(),
-                        result = null;
-                    if (el) {
-                        let firstChild = el.firstChild;
-                        result = new ymaps.shape.Rectangle(
-                            new ymaps.geometry.pixel.Rectangle([
-                                [0, 0],
-                                [firstChild.offsetWidth, firstChild.offsetHeight]
-                            ])
-                        );
+                        closeButton.addEventListener('click', () => {
+                            this.closeBalloon();
+                        })
+                    },
+                    clear: function () {
+                        this.superclass.clear.call(this);
+                    },
+                    closeBalloon: function () {
+                        this.events.fire('userclose');
+                    },
+                    getShape: function () {
+                        let el = this.getElement(),
+                            result = null;
+                        if (el) {
+                            let firstChild = el.firstChild;
+                            result = new ymaps.shape.Rectangle(
+                                new ymaps.geometry.pixel.Rectangle([
+                                    [0, 0],
+                                    [firstChild.offsetWidth, firstChild.offsetHeight]
+                                ])
+                            );
+                        }
+                        return result;
                     }
-                    return result;
-                }
-            });
-
+                });
+        };
 
         const reverseGeoCode = (coords) => {
             // Определяем адрес по координатам (обратное геокодирование).
@@ -60,14 +65,14 @@ const init = () => {
             const pointAddress = reverseGeoCode(pointCoords);
 
             // console.log(pointAddress);
-            console.log(pointCoords);
+            // console.log(pointCoords);
             pointAddress.then(address => {
                 map.balloon.open(pointCoords, {
                     properties: {
                         coords: pointCoords,
                         address: address
                     },
-                    layout: balloonLayout,
+                    layout: balloonLayout(address),
                     contentLayout: bcl(address),
                     closeButton: false
                 });
