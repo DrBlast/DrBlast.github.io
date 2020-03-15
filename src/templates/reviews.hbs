@@ -1,0 +1,12 @@
+{{#each review}}
+    <li class="review-item">
+        <div class="review-header">
+            <div class="review-author">{{author}}</div>
+            <div class="review-place">{{place}}</div>
+            <div class="review-date">{{date}}</div>
+        </div>
+        <div class="review-text">{{reviewText}}</div>
+    </li>
+{{else}}
+    Отзывов пока нет
+{{/each}}

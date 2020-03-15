@@ -2,7 +2,7 @@
     <div class="popup-header">
         <span class="balloon-header">
             <i class="fa fa-map-marker-alt popup-geo-point"></i>
-
+            {{addr}}
         </span>
         <button type="button" class="btn-close">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -10,7 +10,7 @@
     </div>
     <div class="reviews">
         <div class="review-list">
-            Отзывов пока нет
+            {{> "reviews.hbs"}}
         </div>
     </div>
     <!--    <hr class="delimiter"/>-->
@@ -23,7 +23,7 @@
 
             <input name="place" placeholder="Укажите место" autocomplete="off">
 
-            <textarea name="text" id="review-textarea" rows="5"
+            <textarea name="review-text" id="review-textarea" rows="5"
                       placeholder="Поделитесь впечатлениями"></textarea>
             <div>
                 <button class="add-review-btn float-right">Добавить</button>
