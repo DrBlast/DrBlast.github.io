@@ -92,7 +92,7 @@ const init = () => {
         console.log(reviews);
         let reviewHtml = reviewsTpl({reviews});
         console.log(reviewHtml);
-        reviewElement.innerHtml = reviewHtml;
+        reviewElement.innerHTML = reviewHtml;
     };
 
     const reverseGeoCode = (coords) => {
