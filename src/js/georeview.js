@@ -22,7 +22,7 @@ const init = () => {
                 addReviewBtn.addEventListener('click', e => {
                     e.preventDefault();
                     let geoObject = map.balloon.getData();
-                    let reviewList = document.querySelector(".review-list");
+                    let reviewList = document.querySelector(".reviews-list");
                     let reviewForm = addReviewBtn.closest('form.add-review');
                     let reviewDetails = getReviewDetails(reviewForm);
                     let placeWithReview = {
