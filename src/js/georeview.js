@@ -32,10 +32,10 @@ const init = () => {
                     };
 
                     addOrUpdateLocalStorageItem(placeWithReview);
-                  //  updateReviewList(reviewList, geoObject.addr);
+                    updateReviewList(reviewList, geoObject.addr);
                     createPlacemark(placeWithReview);
 
-                    map.balloon.close();
+                  //  map.balloon.close();
                 })
             },
             clear: function () {
@@ -89,9 +89,10 @@ const init = () => {
 
     const updateReviewList = (reviewElement, address) => {
         let reviews = getReviews(address);
-        let reviewHtml = reviewsTpl(reviews);
+        console.log(reviews);
+        let reviewHtml = reviewsTpl({reviews});
         console.log(reviewHtml);
-
+        reviewElement.innerHtml = reviewHtml;
     };
 
     const reverseGeoCode = (coords) => {
